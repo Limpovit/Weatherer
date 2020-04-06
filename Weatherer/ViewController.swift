@@ -38,6 +38,8 @@ class ViewController: UIViewController {
     
     var currentLocation = (latitude: 0.0, longitude: 0.0)
     
+    var weatherURL: String = ""
+    
     override func viewDidLoad() {
         view.backgroundColor = .systemGreen
         super.viewDidLoad()
@@ -53,21 +55,22 @@ class ViewController: UIViewController {
         dayPicker.myVC = self
         
         
-        locationManager.requestAlwaysAuthorization()
-        locationManager.requestWhenInUseAuthorization()
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
+            self.locationManager.delegate = self
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            self.locationManager.startUpdatingLocation()
+            
         }
- 
         
-        getWeatherData(apiUrl:  "https://api.openweathermap.org/data/2.5/forecast?lat=\(currentLocation.latitude)&lon=\(currentLocation.longitude)&appid=97fe442c7c0483c140a556eaee51f3a1&units=metric&lang=ua")
-                
+        
+        
     }
-
+    
     
 }
+//MARK: - Delegate functions
 
 extension ViewController: DayPickerViewDataSource, CLLocationManagerDelegate {
     func dayPickerCount(_ dayPicker: DayPickerView) -> Int {
@@ -78,6 +81,8 @@ extension ViewController: DayPickerViewDataSource, CLLocationManagerDelegate {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else {return}
         self.currentLocation.latitude = locValue.latitude
         self.currentLocation.latitude = locValue.longitude
+        weatherURL = "https://api.openweathermap.org/data/2.5/forecast?lat=\(locValue.latitude)&lon=\(locValue.longitude)&appid=97fe442c7c0483c140a556eaee51f3a1&units=metric&lang=ua"
+        getWeatherData(apiUrl:  weatherURL)
         print("\(locValue.latitude) \(locValue.longitude)")
     }
     
@@ -85,24 +90,28 @@ extension ViewController: DayPickerViewDataSource, CLLocationManagerDelegate {
         return days[indexPath.row]
     }
     
+    //MARK: - Functions
+    
     func getWeekday() -> [String] {
         let today = Date()
         let gregorian = Calendar(identifier: .gregorian)
         let dateComponents = gregorian.dateComponents([.weekday], from: today)
         let todaysWeekday = dateComponents.weekday!
         var otherWeekdays: [Int] = []
+        
         for i in 0...4	 {
             otherWeekdays.append((todaysWeekday - 1 + i) % 7 + 1)
         }
+        
         let weekdayNames = ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"]
         let otherWeekdayStrings = otherWeekdays.map({weekdayNames[$0 - 1]})
         
         return otherWeekdayStrings
     }
-   
+    
     func getWeatherData(apiUrl: String) {
         guard let url = URL(string: apiUrl) else {return}
-             
+        
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             guard let data = data else {return}
@@ -115,8 +124,8 @@ extension ViewController: DayPickerViewDataSource, CLLocationManagerDelegate {
                 
                 self.getImage(forecastIndex: self.dayPicker.onButtonPressed)
                 DispatchQueue.main.async {
-                
-                self.showData()
+                    
+                    self.showData()
                 }
                 
             } catch let error {
@@ -130,7 +139,7 @@ extension ViewController: DayPickerViewDataSource, CLLocationManagerDelegate {
         spinner.stopAnimating()
         
         guard let  tempText = self.currentWeather?.list[self.dayPicker.onButtonPressed].main.temp else {return}
-        temperatureLabel.text = "\(tempText) ℃"
+        temperatureLabel.text = "\(Int(tempText))℃"
         weatherDescriptionLabel.text = currentWeather?.list[self.dayPicker.onButtonPressed].weather[0].weatherDescription
         cityName.text = self.currentWeather?.city.name
         weatherImage.image = dataImage
@@ -139,19 +148,19 @@ extension ViewController: DayPickerViewDataSource, CLLocationManagerDelegate {
     public func getImage(forecastIndex: Int) {
         guard let iconPath = currentWeather?.list[forecastIndex].weather[0].icon else {return}
         let time = currentWeather?.list[forecastIndex].dtTxt
-          print("for time: \(time)")
+        print("for time: \(time)")
         guard let url = URL(string: "https://openweathermap.org/img/wn/\(iconPath)@2x.png") else {return}
         print(url)
         URLSession.shared.dataTask(with: url) { (data, response, error) in
-         guard let data = data, error == nil else { return }
-         print(response?.suggestedFilename ?? url.lastPathComponent)
+            guard let data = data, error == nil else { return }
+            print(response?.suggestedFilename ?? url.lastPathComponent)
             
-          
-         print("Download Finished")
-         DispatchQueue.main.async() {
-            self.showData()
-             self.weatherImage.image = UIImage(data: data)
             
+            print("Download Finished")
+            DispatchQueue.main.async() {
+                self.showData()
+                self.weatherImage.image = UIImage(data: data)
+                
             }
         }.resume()
         
