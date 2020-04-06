@@ -39,7 +39,7 @@ class ViewController: UIViewController {
     var currentLocation = (latitude: 0.0, longitude: 0.0)
     
     override func viewDidLoad() {
-        view.backgroundColor = .systemPink
+        view.backgroundColor = .systemGreen
         super.viewDidLoad()
         
         

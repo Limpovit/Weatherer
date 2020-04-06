@@ -18,7 +18,7 @@ class DayPickerView: UIControl {
     public var dataSourse: DayPickerViewDataSource? {
         didSet {
         setupView()
-            self.backgroundColor = .systemPink
+            self.backgroundColor = .systemGreen
             
         }
         
@@ -46,7 +46,7 @@ class DayPickerView: UIControl {
             let button = UIButton(type: .system)
             button.setTitle(title, for: .normal)
             button.tag = item
-            button.setTitleColor(UIColor.lightGray, for: .normal)
+            button.setTitleColor(UIColor.white, for: .normal)
             button.setTitleColor(UIColor.white, for: .selected)
             button.addTarget(self, action: #selector(selectedButton), for: .touchUpInside)
             buttons.append(button)
