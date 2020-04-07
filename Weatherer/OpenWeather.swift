@@ -98,45 +98,44 @@ struct Forecasts{
     
     init(lists: [List]) {
               dayForecast = [DayForecast]()
-        
-        for index in 1...4{
-            var listItems: [List] = [List]()
-            for index2 in 1...7 {
-                listItems.append(lists[(index*index2)-1])
-            }
-            dayForecast.append(DayForecast(listItems: listItems))
-        }
-        
-    }
-    
-    
-    struct DayForecast {
-        //from list
-        var dayTime: [TimeForecast]
-        
-        init(listItems: [List]) {
-            dayTime = [TimeForecast]()
+        let forecastsForDay = 8
+        for index in 0..<5 {
+            var day = DayForecast()
             
-            for item in listItems {
-            dayTime.append(TimeForecast(temp: item.main.temp,
-                                        feelsLike: item.main.feelsLike,
-                                        tempMin: item.main.tempMin,
-                                        tempMax: item.main.tempMax,
-                                        pressure: item.main.pressure,
-                                        seaLevel: item.main.seaLevel,
-                                        grndLevel: item.main.grndLevel,
-                                        humidity: item.main.humidity,
-                                        tempKf: item.main.tempKf,
-                                        id: item.weather[0].id,
-                                        main: item.weather[0].main,
-                                        weatherDescription: item.weather[0].weatherDescription,
-                                        icon: item.weather[0].icon,
-                                        windSpeed: item.wind.speed,
-                                        windDeg: item.wind.deg))
+            for index2 in 0..<forecastsForDay {
+                day.addTimeForecast(listItem: lists[(index*forecastsForDay)+index2])
             }
+            dayForecast.append(day)
         }
     }
 }
+
+struct DayForecast {
+       //from list
+       var dayTime: [TimeForecast]
+       
+       init() {
+           dayTime = [TimeForecast]()
+        }
+    mutating func addTimeForecast(listItem: List){
+    let timeForecast = TimeForecast(temp: listItem.main.temp,
+                                feelsLike: listItem.main.feelsLike,
+                                tempMin: listItem.main.tempMin,
+                                tempMax: listItem.main.tempMax,
+                                pressure: listItem.main.pressure,
+                                seaLevel: listItem.main.seaLevel,
+                                grndLevel: listItem.main.grndLevel,
+                                humidity: listItem.main.humidity,
+                                tempKf: listItem.main.tempKf,
+                                id: listItem.weather[0].id,
+                                main: listItem.weather[0].main,
+                                weatherDescription: listItem.weather[0].weatherDescription,
+                                icon: listItem.weather[0].icon,
+                                windSpeed: listItem.wind.speed,
+                                windDeg: listItem.wind.deg)
+        dayTime.append(timeForecast)
+       }
+   }
 
 struct TimeForecast {
     var temp: Double

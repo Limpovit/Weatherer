@@ -28,7 +28,8 @@ class ViewController: UIViewController {
     
     //MARK: - Variables
     
-    var currentWeather: OpenWeather? = nil
+    var city: City? = nil
+    var forecast: Forecasts? = nil
     
     var days: [String] = []
     
@@ -120,8 +121,8 @@ extension ViewController: DayPickerViewDataSource, CLLocationManagerDelegate {
             do {
                 
                 let weather = try JSONDecoder().decode( OpenWeather.self, from: data)
-                self.currentWeather = weather
-                
+                self.forecast = Forecasts(lists: weather.list)
+                self.city = weather.city
                 self.getImage(forecastIndex: self.dayPicker.onButtonPressed)
                 DispatchQueue.main.async {
                     
@@ -138,17 +139,15 @@ extension ViewController: DayPickerViewDataSource, CLLocationManagerDelegate {
     func showData(){
         spinner.stopAnimating()
         
-        guard let  tempText = self.currentWeather?.list[self.dayPicker.onButtonPressed].main.temp else {return}
-        temperatureLabel.text = "\(Int(tempText))℃"
-        weatherDescriptionLabel.text = currentWeather?.list[self.dayPicker.onButtonPressed].weather[0].weatherDescription
-        cityName.text = self.currentWeather?.city.name
+        guard let  temp = forecast?.dayForecast[0].dayTime[0].temp else {return}
+        temperatureLabel.text = "\(Int(temp))℃"
+        weatherDescriptionLabel.text = forecast?.dayForecast[0].dayTime[0].weatherDescription
+        cityName.text = self.city?.name
         weatherImage.image = dataImage
         
     }
     public func getImage(forecastIndex: Int) {
-        guard let iconPath = currentWeather?.list[forecastIndex].weather[0].icon else {return}
-        let time = currentWeather?.list[forecastIndex].dtTxt
-        print("for time: \(time)")
+        guard let iconPath = forecast?.dayForecast[0].dayTime[0].icon else {return}
         guard let url = URL(string: "https://openweathermap.org/img/wn/\(iconPath)@2x.png") else {return}
         print(url)
         URLSession.shared.dataTask(with: url) { (data, response, error) in

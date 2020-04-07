@@ -74,7 +74,7 @@ class DayPickerView: UIControl {
         let index = sender.tag
         let button = self.buttons[index]
         button.isSelected = true
-        onButtonPressed = index * 6
+        onButtonPressed = index
         myVC?.getImage(forecastIndex: onButtonPressed)
           }
     
