@@ -96,64 +96,67 @@ struct Wind: Codable {
 struct Forecasts{
     var dayForecast: [DayForecast]
     
-   init(lists: [List]) {
-    dayForecast = [DayForecast()]
-            var dayTimeFull: [TimeForecast] = []
-         for list in lists{
-                
-                let timeForecast = TimeForecast(temp: list.main.temp,
-                                                feelsLike: list.main.feelsLike,
-                                                tempMin: list.main.tempMin,
-                                                tempMax: list.main.tempMax,
-                                                pressure: list.main.pressure,
-                                                seaLevel: list.main.seaLevel,
-                                                grndLevel: list.main.grndLevel,
-                                                humidity: list.main.humidity,
-                                                tempKf: list.main.tempKf,
-                                                id: list.weather[0].id,
-                                                main: list.weather[0].main,
-                                                weatherDescription: list.weather[0].weatherDescription,
-                                                icon: list.weather[0].icon,
-                                                windSpeed: list.wind.speed,
-                                                windDeg: list.wind.deg)
-                dayTimeFull.append(timeForecast)
+    init(lists: [List]) {
+              dayForecast = [DayForecast]()
+        
+        for index in 1...4{
+            var listItems: [List] = [List]()
+            for index2 in 1...7 {
+                listItems.append(lists[(index*index2)-1])
             }
-    for index in 1...5{
-        dayForecast.append(DayForecast())
-        for index2 in 1...8 {
-            dayForecast[index-1].dayTime.append(dayTimeFull[(index*index2)-1])
+            dayForecast.append(DayForecast(listItems: listItems))
         }
-        }
-
+        
     }
     
     
     struct DayForecast {
         //from list
-        var dayTime = [TimeForecast()]
+        var dayTime: [TimeForecast]
         
-          
+        init(listItems: [List]) {
+            dayTime = [TimeForecast]()
+            
+            for item in listItems {
+            dayTime.append(TimeForecast(temp: item.main.temp,
+                                        feelsLike: item.main.feelsLike,
+                                        tempMin: item.main.tempMin,
+                                        tempMax: item.main.tempMax,
+                                        pressure: item.main.pressure,
+                                        seaLevel: item.main.seaLevel,
+                                        grndLevel: item.main.grndLevel,
+                                        humidity: item.main.humidity,
+                                        tempKf: item.main.tempKf,
+                                        id: item.weather[0].id,
+                                        main: item.weather[0].main,
+                                        weatherDescription: item.weather[0].weatherDescription,
+                                        icon: item.weather[0].icon,
+                                        windSpeed: item.wind.speed,
+                                        windDeg: item.wind.deg))
+            }
+        }
+    }
 }
+
 struct TimeForecast {
-    var temp = 0.0
-    var feelsLike = 0.0
-    var tempMin = 0.0
-    var tempMax = 0.0
-    var pressure = 0
-    var seaLevel = 0
-    var grndLevel  = 0
-    var humidity  = 0
-    var tempKf  = 0.0
-    //from list.weather®
-    var id  = 0
-    var main = ""
-    var weatherDescription = ""
-    var icon = ""
-    var windSpeed = 0.0
-    var windDeg = 0
+    var temp: Double
+    var feelsLike: Double
+    var tempMin: Double
+    var tempMax: Double
+    var pressure: Int
+    var seaLevel: Int
+    var grndLevel: Int
+    var humidity: Int
+    var tempKf: Double
+    var id: Int
+    var main: String
+    var weatherDescription: String
+    var icon: String
+    var windSpeed: Double
+    var windDeg: Int
     
     
 }
-}
+
 
 
