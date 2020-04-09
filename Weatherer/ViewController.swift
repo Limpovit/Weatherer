@@ -61,8 +61,10 @@ class ViewController: UIViewController {
         print(days)
         setUpStackView()
         view.addSubview(dayPicker)
-        
+
         timePicker.delegate = self
+
+        
         
         //Location loading
         self.locationManager.requestAlwaysAuthorization()
@@ -70,7 +72,7 @@ class ViewController: UIViewController {
         if CLLocationManager.locationServicesEnabled() {
             self.locationManager.delegate = self
             self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            self.locationManager.startUpdatingLocation()
+            self.locationManager.requestLocation()
             
         }
         
@@ -109,6 +111,8 @@ class ViewController: UIViewController {
         let button = self.buttons[index]
         button.isSelected = true
         self.dayIndex = index
+        self.timeIndex = 0
+        getWeatherData(apiUrl:  weatherURL)
     }
     
     func getWeekday() -> [String] {
@@ -152,11 +156,11 @@ class ViewController: UIViewController {
         spinner.stopAnimating()
         
         guard let  temp = forecast?.dayForecast[forecastIndex].dayTime[timeIndex].temp else {return}
-        print("\(dayIndex), \(timeIndex)")
+        
         temperatureLabel.text = "\(Int(temp))℃"
         weatherDescriptionLabel.text = forecast?.dayForecast[dayIndex].dayTime[timeIndex].weatherDescription
         cityName.text = self.city?.name
-        
+
         
     }
     
@@ -166,8 +170,9 @@ class ViewController: UIViewController {
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data, error == nil else { return }
             print(response?.suggestedFilename ?? url.lastPathComponent)
-            print("Download Finished")
             DispatchQueue.main.async() {
+                print("\(self.dayIndex), \(self.timeIndex), \(self.forecast?.dayForecast[forecastIndex].dayTime[timeIndex].dtTxt)")
+                self.timePicker.dataSource = self.forecast?.dayForecast[self.dayIndex]
                 self.showData(forecastIndex: forecastIndex, timeIndex: timeIndex)
                 self.weatherImage.image = UIImage(data: data)
                 
@@ -192,27 +197,21 @@ extension ViewController: CLLocationManagerDelegate {
         print("\(locValue.latitude) \(locValue.longitude)")
     }
     
+    func  locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+
+    }
+
 }
 
-extension ViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return dayTimes.count
-    }
-    
+extension ViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        dayTimes[row]
-    }
+        return forecast?.dayForecast[dayIndex].dayTime[row].dtTxt
+       }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         timeIndex = row
-        showData(forecastIndex: self.dayIndex, timeIndex: timeIndex)
+        getWeatherData(apiUrl:  weatherURL)
     }
     
     
