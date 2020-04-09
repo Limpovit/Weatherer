@@ -52,7 +52,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemGreen
+        self.setBackground(colors: [ UIColor.white.cgColor, UIColor.systemBlue.cgColor])
         
         temperatureLabel.textAlignment = .center
         spinner.startAnimating()
@@ -81,6 +81,21 @@ class ViewController: UIViewController {
     }
     //MARK: - Functions
     
+    func setBackground(colors: [CGColor]){
+        
+        let gradientLayer = CAGradientLayer()
+        
+        gradientLayer.frame = self.view.bounds
+        
+        //gradientLayer.type = .radial
+        //gradientLayer.startPoint = CGPoint(x: 0.5, y: -0.5)
+        //gradientLayer.endPoint = CGPoint(x: 1.2, y: 0.5)
+        gradientLayer.colors = colors
+        //self.view.layer.insertSublayer(gradientLayer, above: 0)
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+        
+    }
+    
     func setUpStackView() {
         
         for item in 0..<5 {
@@ -88,7 +103,7 @@ class ViewController: UIViewController {
             let button = UIButton(type: .system)
             button.setTitle(title, for: .normal)
             button.tag = item
-            button.setTitleColor(UIColor.white, for: .normal)
+            button.setTitleColor(UIColor.systemGray, for: .normal)
             button.setTitleColor(UIColor.white, for: .selected)
             button.addTarget(self, action: #selector(selectedButton), for: .touchUpInside)
             buttons.append(button)
@@ -169,12 +184,20 @@ class ViewController: UIViewController {
         guard let url = URL(string: "https://openweathermap.org/img/wn/\(iconPath)@2x.png") else {return}
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data, error == nil else { return }
-            print(response?.suggestedFilename ?? url.lastPathComponent)
+         //   print(response?.suggestedFilename ?? url.lastPathComponent)
             DispatchQueue.main.async() {
-                print("\(self.dayIndex), \(self.timeIndex), \(self.forecast?.dayForecast[forecastIndex].dayTime[timeIndex].dtTxt)")
+                print("\(self.dayIndex), \(self.timeIndex), \(self.forecast!.dayForecast[forecastIndex].dayTime[timeIndex].dtTxt)")
+                print(iconPath.contains("n"))
                 self.timePicker.dataSource = self.forecast?.dayForecast[self.dayIndex]
                 self.showData(forecastIndex: forecastIndex, timeIndex: timeIndex)
                 self.weatherImage.image = UIImage(data: data)
+                if iconPath.contains("n"){
+                    self.view.layer.sublayers?.remove(at: 0)
+                    self.setBackground(colors: [UIColor.black.cgColor, UIColor.systemBlue.cgColor])
+                } else {
+                    self.view.layer.sublayers?.remove(at: 0)
+                    self.setBackground(colors: [ UIColor.white.cgColor, UIColor.systemBlue.cgColor])
+                }
                 
             }
         }.resume()
@@ -205,7 +228,11 @@ extension ViewController: CLLocationManagerDelegate {
 
 extension ViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return forecast?.dayForecast[dayIndex].dayTime[row].dtTxt
+        let time = forecast?.dayForecast[dayIndex].dayTime[row].dtTxt
+        let startOfTime = forecast?.dayForecast[dayIndex].dayTime[row].dtTxt.firstIndex(of: " ")
+        
+        return "\(time![startOfTime!...])"
+            
        }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

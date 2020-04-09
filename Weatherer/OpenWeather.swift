@@ -193,8 +193,7 @@ struct TimeForecast {
     var icon: String
     var windSpeed: Double
     var windDeg: Int
-    var dtTxt:String
-    
+    var dtTxt:String  
     
 }
 
