@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     
     
     //MARK: - Outlets
+    @IBOutlet weak var gradientBackground: UIView!
     
     @IBOutlet weak var dayPicker: UIStackView!
     
@@ -85,14 +86,14 @@ class ViewController: UIViewController {
         
         let gradientLayer = CAGradientLayer()
         
-        gradientLayer.frame = self.view.bounds
+        gradientLayer.frame = gradientBackground.bounds
         
         //gradientLayer.type = .radial
         //gradientLayer.startPoint = CGPoint(x: 0.5, y: -0.5)
         //gradientLayer.endPoint = CGPoint(x: 1.2, y: 0.5)
         gradientLayer.colors = colors
         //self.view.layer.insertSublayer(gradientLayer, above: 0)
-        self.view.layer.insertSublayer(gradientLayer, at: 0)
+        gradientBackground.layer.insertSublayer(gradientLayer, at: 0)
         
     }
     
@@ -192,10 +193,10 @@ class ViewController: UIViewController {
                 self.showData(forecastIndex: forecastIndex, timeIndex: timeIndex)
                 self.weatherImage.image = UIImage(data: data)
                 if iconPath.contains("n"){
-                    self.view.layer.sublayers?.remove(at: 0)
+                    self.gradientBackground.layer.sublayers?.remove(at: 0)
                     self.setBackground(colors: [UIColor.black.cgColor, UIColor.systemBlue.cgColor])
                 } else {
-                    self.view.layer.sublayers?.remove(at: 0)
+                    self.gradientBackground.layer.sublayers?.remove(at: 0)
                     self.setBackground(colors: [ UIColor.white.cgColor, UIColor.systemBlue.cgColor])
                 }
                 
@@ -231,7 +232,7 @@ extension ViewController: UIPickerViewDelegate {
         let time = forecast?.dayForecast[dayIndex].dayTime[row].dtTxt
         let startOfTime = forecast?.dayForecast[dayIndex].dayTime[row].dtTxt.firstIndex(of: " ")
         
-        return "\(time![startOfTime!...])"
+        return String((time![startOfTime!...]))
             
        }
     
