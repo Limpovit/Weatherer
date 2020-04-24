@@ -24,6 +24,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var weatherDescriptionLabel: UILabel!
     
     @IBOutlet weak var weatherImage: UIImageView!
+    @IBOutlet weak var sunriseLabel: UILabel!
+    @IBOutlet weak var sunsetLabel: UILabel!
     
     @IBOutlet weak var cityName: UILabel!
     
@@ -31,6 +33,7 @@ class ViewController: UIViewController {
     //MARK: - Variables
     
     var city: City? = nil
+    var sunTime = (rise: "", set: "")
     var forecast: Forecasts? = nil
     
     var days: [String] = []
@@ -80,6 +83,19 @@ class ViewController: UIViewController {
         
         
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: nil, completion: {
+            _ in
+
+            self.gradientBackground.layer.sublayers?.remove(at: 0)
+            self.setBackground(colors: [ UIColor.white.cgColor, UIColor.systemBlue.cgColor])
+            print("rotate")
+        })
+        
+    }
+    
     //MARK: - Functions
     
     func setBackground(colors: [CGColor]){
@@ -87,12 +103,7 @@ class ViewController: UIViewController {
         let gradientLayer = CAGradientLayer()
         
         gradientLayer.frame = gradientBackground.bounds
-        
-        //gradientLayer.type = .radial
-        //gradientLayer.startPoint = CGPoint(x: 0.5, y: -0.5)
-        //gradientLayer.endPoint = CGPoint(x: 1.2, y: 0.5)
         gradientLayer.colors = colors
-        //self.view.layer.insertSublayer(gradientLayer, above: 0)
         gradientBackground.layer.insertSublayer(gradientLayer, at: 0)
         
     }
@@ -131,6 +142,27 @@ class ViewController: UIViewController {
         getWeatherData(apiUrl:  weatherURL)
     }
     
+    func getSunsetAndSunrise(_ data: OpenWeather ) -> (String, String) {
+        
+        
+        
+        let rise = Date(timeIntervalSince1970: Double(data.city.sunrise))
+        let set =  Date(timeIntervalSince1970: Double(data.city.sunset))
+        let riseHour = Calendar.current.component(.hour, from: rise)
+        let setHour = Calendar.current.component(.hour, from: set)
+        let riseMinute = Calendar.current.component(.minute, from: rise)
+        let setMinute = Calendar.current.component(.minute, from: set)
+        var zero  = (set: "", rise: "")
+        if setMinute < 10 {
+            zero.set = "0"
+        }
+        if riseMinute < 10 {
+            zero.rise = "0"
+        }
+        
+        return ("\(riseHour):\(zero.rise)\(riseMinute)", "\(setHour):\(zero.set)\(setMinute)")
+    }
+    
     func getWeekday() -> [String] {
         let today = Date()
         let gregorian = Calendar(identifier: .gregorian)
@@ -159,6 +191,7 @@ class ViewController: UIViewController {
                 let weather = try JSONDecoder().decode( OpenWeather.self, from: data)
                 self.forecast = Forecasts(lists: weather.list)
                 self.city = weather.city
+                self.sunTime = self.getSunsetAndSunrise(weather)
                 self.getImage(forecastIndex: self.dayIndex, timeIndex: self.timeIndex)
                 
             } catch let error {
@@ -173,7 +206,9 @@ class ViewController: UIViewController {
         
         guard let  temp = forecast?.dayForecast[forecastIndex].dayTime[timeIndex].temp else {return}
         
-        temperatureLabel.text = "\(Int(temp))℃"
+        temperatureLabel.text = "\(Int(temp))"
+        sunsetLabel.text = sunTime.set
+        sunriseLabel.text = sunTime.rise
         weatherDescriptionLabel.text = forecast?.dayForecast[dayIndex].dayTime[timeIndex].weatherDescription
         cityName.text = self.city?.name
 
@@ -184,8 +219,13 @@ class ViewController: UIViewController {
         guard let iconPath = forecast?.dayForecast[forecastIndex].dayTime[timeIndex].icon else {return}
         guard let url = URL(string: "https://openweathermap.org/img/wn/\(iconPath)@2x.png") else {return}
         URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data, error == nil else { return }
-         //   print(response?.suggestedFilename ?? url.lastPathComponent)
+            guard let data = data, error == nil else {
+                
+                print("error")
+                return
+                
+            }
+
             DispatchQueue.main.async() {
                 print("\(self.dayIndex), \(self.timeIndex), \(self.forecast!.dayForecast[forecastIndex].dayTime[timeIndex].dtTxt)")
                 print(iconPath.contains("n"))
@@ -230,9 +270,9 @@ extension ViewController: CLLocationManagerDelegate {
 extension ViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         let time = forecast?.dayForecast[dayIndex].dayTime[row].dtTxt
-        let startOfTime = forecast?.dayForecast[dayIndex].dayTime[row].dtTxt.firstIndex(of: " ")
+        let startOfTime = time?.firstIndex(of: " ")
         
-        return String((time![startOfTime!...]))
+        return String(time![startOfTime!...])
             
        }
     
