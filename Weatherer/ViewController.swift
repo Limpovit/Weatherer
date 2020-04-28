@@ -65,9 +65,9 @@ class ViewController: UIViewController {
         print(days)
         setUpStackView()
         view.addSubview(dayPicker)
-
+        
         timePicker.delegate = self
-
+        
         
         
         //Location loading
@@ -88,7 +88,7 @@ class ViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: nil, completion: {
             _ in
-
+            
             self.gradientBackground.layer.sublayers?.remove(at: 0)
             self.setBackground(colors: [ UIColor.white.cgColor, UIColor.systemBlue.cgColor])
             print("rotate")
@@ -211,40 +211,36 @@ class ViewController: UIViewController {
         sunriseLabel.text = sunTime.rise
         weatherDescriptionLabel.text = forecast?.dayForecast[dayIndex].dayTime[timeIndex].weatherDescription
         cityName.text = self.city?.name
-
+        
         
     }
     
     public func getImage(forecastIndex: Int, timeIndex: Int) {
         guard let iconPath = forecast?.dayForecast[forecastIndex].dayTime[timeIndex].icon else {return}
-        guard let url = URL(string: "https://openweathermap.org/img/wn/\(iconPath)@2x.png") else {return}
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data, error == nil else {
-                
-                print("error")
-                return
-                
-            }
-
-            DispatchQueue.main.async() {
-                print("\(self.dayIndex), \(self.timeIndex), \(self.forecast!.dayForecast[forecastIndex].dayTime[timeIndex].dtTxt)")
-                print(iconPath.contains("n"))
-                self.timePicker.dataSource = self.forecast?.dayForecast[self.dayIndex]
-                self.showData(forecastIndex: forecastIndex, timeIndex: timeIndex)
-                self.weatherImage.image = UIImage(data: data)
-                if iconPath.contains("n"){
-                    self.gradientBackground.layer.sublayers?.remove(at: 0)
-                    self.setBackground(colors: [UIColor.black.cgColor, UIColor.systemBlue.cgColor])
-                } else {
-                    self.gradientBackground.layer.sublayers?.remove(at: 0)
-                    self.setBackground(colors: [ UIColor.white.cgColor, UIColor.systemBlue.cgColor])
-                }
-                
-            }
-        }.resume()
+        guard let iconURL = URL(string: "https://openweathermap.org/img/wn/\(iconPath)@2x.png") else {return}
+        var data = Data()
+        do {
+            data = try Data(contentsOf: iconURL)
+        }
+        catch {
+            print("error image loading")
+        }
         
+        DispatchQueue.main.async() {
+            print("\(self.dayIndex), \(self.timeIndex), \(self.forecast!.dayForecast[forecastIndex].dayTime[timeIndex].dtTxt)")
+            self.timePicker.dataSource = self.forecast?.dayForecast[self.dayIndex]
+            self.showData(forecastIndex: forecastIndex, timeIndex: timeIndex)
+            self.weatherImage.image = UIImage(data: data)
+            if iconPath.contains("n"){
+                self.gradientBackground.layer.sublayers?.remove(at: 0)
+                self.setBackground(colors: [UIColor.black.cgColor, UIColor.systemBlue.cgColor])
+            } else {
+                self.gradientBackground.layer.sublayers?.remove(at: 0)
+                self.setBackground(colors: [ UIColor.white.cgColor, UIColor.systemBlue.cgColor])
+            }
+            
+        }
     }
-    
     
 }
 //MARK: - Delegate functions
@@ -262,9 +258,9 @@ extension ViewController: CLLocationManagerDelegate {
     }
     
     func  locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-
+        
     }
-
+    
 }
 
 extension ViewController: UIPickerViewDelegate {
@@ -273,16 +269,14 @@ extension ViewController: UIPickerViewDelegate {
         let startOfTime = time?.firstIndex(of: " ")
         
         return String(time![startOfTime!...])
-            
-       }
+        
+    }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         timeIndex = row
         getWeatherData(apiUrl:  weatherURL)
-    }
-    
-    
+    }       
 }
 
 
