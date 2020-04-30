@@ -14,6 +14,10 @@
 		7B33672024365FED004D11B5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B33671E24365FED004D11B5 /* Main.storyboard */; };
 		7B33672224365FEE004D11B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B33672124365FEE004D11B5 /* Assets.xcassets */; };
 		7B33672524365FEE004D11B5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B33672324365FEE004D11B5 /* LaunchScreen.storyboard */; };
+		7B9D7485245B19B000F0F7A4 /* Forecasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9D7484245B19B000F0F7A4 /* Forecasts.swift */; };
+		7B9D748A245B209E00F0F7A4 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9D7489245B209E00F0F7A4 /* NetworkService.swift */; };
+		7B9D748C245B263200F0F7A4 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9D748B245B263200F0F7A4 /* MainPresenter.swift */; };
+		7B9D748E245B297000F0F7A4 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9D748D245B297000F0F7A4 /* LocationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,10 @@
 		7B33672124365FEE004D11B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7B33672424365FEE004D11B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7B33672624365FEE004D11B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7B9D7484245B19B000F0F7A4 /* Forecasts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecasts.swift; sourceTree = "<group>"; };
+		7B9D7489245B209E00F0F7A4 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		7B9D748B245B263200F0F7A4 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		7B9D748D245B297000F0F7A4 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,16 +66,52 @@
 		7B33671724365FED004D11B5 /* Weatherer */ = {
 			isa = PBXGroup;
 			children = (
+				7B9D7488245B205D00F0F7A4 /* ServiceLayer */,
+				7B9D7481245B18A900F0F7A4 /* Model */,
+				7B9D7482245B18B700F0F7A4 /* View */,
+				7B9D7483245B18C200F0F7A4 /* Presenter */,
 				7B33671824365FED004D11B5 /* AppDelegate.swift */,
 				7B33671A24365FED004D11B5 /* SceneDelegate.swift */,
 				7B33671C24365FED004D11B5 /* ViewController.swift */,
-				7B204C7B2437682C00EF362E /* OpenWeather.swift */,
 				7B33671E24365FED004D11B5 /* Main.storyboard */,
 				7B33672124365FEE004D11B5 /* Assets.xcassets */,
 				7B33672324365FEE004D11B5 /* LaunchScreen.storyboard */,
 				7B33672624365FEE004D11B5 /* Info.plist */,
 			);
 			path = Weatherer;
+			sourceTree = "<group>";
+		};
+		7B9D7481245B18A900F0F7A4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7B204C7B2437682C00EF362E /* OpenWeather.swift */,
+				7B9D7484245B19B000F0F7A4 /* Forecasts.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7B9D7482245B18B700F0F7A4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7B9D7483245B18C200F0F7A4 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				7B9D748B245B263200F0F7A4 /* MainPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		7B9D7488245B205D00F0F7A4 /* ServiceLayer */ = {
+			isa = PBXGroup;
+			children = (
+				7B9D7489245B209E00F0F7A4 /* NetworkService.swift */,
+				7B9D748D245B297000F0F7A4 /* LocationService.swift */,
+			);
+			path = ServiceLayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,9 +186,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B33671D24365FED004D11B5 /* ViewController.swift in Sources */,
+				7B9D748A245B209E00F0F7A4 /* NetworkService.swift in Sources */,
+				7B9D748E245B297000F0F7A4 /* LocationService.swift in Sources */,
 				7B33671924365FED004D11B5 /* AppDelegate.swift in Sources */,
 				7B33671B24365FED004D11B5 /* SceneDelegate.swift in Sources */,
 				7B204C7C2437682C00EF362E /* OpenWeather.swift in Sources */,
+				7B9D748C245B263200F0F7A4 /* MainPresenter.swift in Sources */,
+				7B9D7485245B19B000F0F7A4 /* Forecasts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

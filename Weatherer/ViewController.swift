@@ -243,7 +243,7 @@ class ViewController: UIViewController {
     }
     
 }
-//MARK: - Delegate functions
+//MARK: - Extensions
 
 extension ViewController: CLLocationManagerDelegate {
     
@@ -251,7 +251,7 @@ extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else {return}
         self.currentLocation.latitude = locValue.latitude
-        self.currentLocation.latitude = locValue.longitude
+        self.currentLocation.longitude = locValue.longitude
         weatherURL = "https://api.openweathermap.org/data/2.5/forecast?lat=\(locValue.latitude)&lon=\(locValue.longitude)&appid=97fe442c7c0483c140a556eaee51f3a1&units=metric&lang=ua"
         getWeatherData(apiUrl:  weatherURL)
         print("\(locValue.latitude) \(locValue.longitude)")
@@ -280,3 +280,16 @@ extension ViewController: UIPickerViewDelegate {
 }
 
 
+extension DayForecast: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return dayTime.count
+    }
+    
+    
+    
+}
