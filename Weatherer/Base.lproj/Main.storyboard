@@ -7,14 +7,21 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Weatherer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="Weatherer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="2cR-ho-2hI">
+                                <rect key="frame" x="162.5" y="122" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="Onc-jl-C9U"/>
+                                    <constraint firstAttribute="height" constant="50" id="pWo-mD-8GI"/>
+                                </constraints>
+                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KSR-Pn-aJs" userLabel="GradientBackground">
                                 <rect key="frame" x="0.0" y="0.0" width="840" height="667"/>
                                 <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -56,13 +63,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="2cR-ho-2hI">
-                                <rect key="frame" x="162.5" y="122" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="Onc-jl-C9U"/>
-                                    <constraint firstAttribute="height" constant="50" id="pWo-mD-8GI"/>
-                                </constraints>
-                            </activityIndicatorView>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OUa-I6-DGx">
                                 <rect key="frame" x="27.5" y="467" width="320" height="200"/>
                                 <constraints>
@@ -149,16 +149,16 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="cityName" destination="pvo-Wi-fU0" id="HwR-rE-J8U"/>
-                        <outlet property="dayPicker" destination="vwQ-U0-kQt" id="IVz-hz-hNi"/>
-                        <outlet property="gradientBackground" destination="KSR-Pn-aJs" id="Z42-lA-0wK"/>
-                        <outlet property="spinner" destination="2cR-ho-2hI" id="Cm0-1M-LZS"/>
-                        <outlet property="sunriseLabel" destination="XHN-Mi-g8C" id="51q-tM-4Y9"/>
-                        <outlet property="sunsetLabel" destination="7k2-xh-UO7" id="pXk-7f-fqG"/>
-                        <outlet property="temperatureLabel" destination="hFE-tk-Yvu" id="iLb-rh-CwY"/>
-                        <outlet property="timePicker" destination="OUa-I6-DGx" id="dA2-O9-teQ"/>
-                        <outlet property="weatherDescriptionLabel" destination="4Ij-ns-D6r" id="fVT-Gg-r4a"/>
-                        <outlet property="weatherImage" destination="kdX-aq-9ds" id="FOl-MX-ZW9"/>
+                        <outlet property="cityName" destination="pvo-Wi-fU0" id="EtX-8s-CXl"/>
+                        <outlet property="dayPicker" destination="vwQ-U0-kQt" id="if4-xy-MuH"/>
+                        <outlet property="gradientBackground" destination="KSR-Pn-aJs" id="mzr-If-acV"/>
+                        <outlet property="spinner" destination="2cR-ho-2hI" id="Wcl-QL-75c"/>
+                        <outlet property="sunriseLabel" destination="XHN-Mi-g8C" id="8nq-Ht-daF"/>
+                        <outlet property="sunsetLabel" destination="7k2-xh-UO7" id="gXo-sF-80D"/>
+                        <outlet property="temperatureLabel" destination="hFE-tk-Yvu" id="lJV-8o-5w8"/>
+                        <outlet property="timePicker" destination="OUa-I6-DGx" id="6WZ-15-SFT"/>
+                        <outlet property="weatherDescriptionLabel" destination="4Ij-ns-D6r" id="vfr-7a-gUC"/>
+                        <outlet property="weatherImage" destination="kdX-aq-9ds" id="C9E-3B-l39"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
