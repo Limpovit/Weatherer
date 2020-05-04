@@ -18,6 +18,8 @@
 		7B9D748A245B209E00F0F7A4 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9D7489245B209E00F0F7A4 /* NetworkService.swift */; };
 		7B9D748C245B263200F0F7A4 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9D748B245B263200F0F7A4 /* MainPresenter.swift */; };
 		7B9D748E245B297000F0F7A4 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9D748D245B297000F0F7A4 /* LocationService.swift */; };
+		7BEBEAB224604607009541B8 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEBEAB124604607009541B8 /* MainViewController.swift */; };
+		7BEBEAB42460470C009541B8 /* ModuleBuilder .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEBEAB32460470C009541B8 /* ModuleBuilder .swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		7B9D7489245B209E00F0F7A4 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		7B9D748B245B263200F0F7A4 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		7B9D748D245B297000F0F7A4 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		7BEBEAB124604607009541B8 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		7BEBEAB32460470C009541B8 /* ModuleBuilder .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModuleBuilder .swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,7 @@
 				7B33672124365FEE004D11B5 /* Assets.xcassets */,
 				7B33672324365FEE004D11B5 /* LaunchScreen.storyboard */,
 				7B33672624365FEE004D11B5 /* Info.plist */,
+				7BEBEAB32460470C009541B8 /* ModuleBuilder .swift */,
 			);
 			path = Weatherer;
 			sourceTree = "<group>";
@@ -93,6 +98,7 @@
 		7B9D7482245B18B700F0F7A4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7BEBEAB124604607009541B8 /* MainViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -189,8 +195,10 @@
 				7B9D748A245B209E00F0F7A4 /* NetworkService.swift in Sources */,
 				7B9D748E245B297000F0F7A4 /* LocationService.swift in Sources */,
 				7B33671924365FED004D11B5 /* AppDelegate.swift in Sources */,
+				7BEBEAB42460470C009541B8 /* ModuleBuilder .swift in Sources */,
 				7B33671B24365FED004D11B5 /* SceneDelegate.swift in Sources */,
 				7B204C7C2437682C00EF362E /* OpenWeather.swift in Sources */,
+				7BEBEAB224604607009541B8 /* MainViewController.swift in Sources */,
 				7B9D748C245B263200F0F7A4 /* MainPresenter.swift in Sources */,
 				7B9D7485245B19B000F0F7A4 /* Forecasts.swift in Sources */,
 			);
