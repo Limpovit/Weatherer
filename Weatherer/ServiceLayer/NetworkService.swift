@@ -9,18 +9,22 @@
 import Foundation
 
 protocol NetworkServiceProtocol {
-    func getForecast(completion: @escaping (Result<[DayForecast]?, Error>) -> Void)
-    
+    func getForecast(completion: @escaping (Result<Forecasts?, Error>) -> Void)
+    var locationService: LocationServiceProtocol { get }
+    init(locationService: LocationServiceProtocol)
 }
 
 class NetworkService: NetworkServiceProtocol {
-
+    var locationService: LocationServiceProtocol
     
-   
+    required init(locationService: LocationServiceProtocol) {
+        self.locationService = locationService
+    }
     
-    func getForecast(completion: @escaping (Result<[DayForecast]?, Error>) -> Void) {
-        var location = (latitude: 0.0, longitude: 0.0)
-        var weatherURL = "https://api.openweathermap.org/data/2.5/forecast?lat=\(location.latitude)&lon=\(location.longitude)&appid=97fe442c7c0483c140a556eaee51f3a1&units=metric&lang=ua"
+    func getForecast(completion: @escaping (Result<Forecasts?, Error>) -> Void) {
+        
+        let location = locationService.getLocation()
+        let weatherURL = "https://api.openweathermap.org/data/2.5/forecast?lat=\(location.latitude)&lon=\(location.longitude)&appid=97fe442c7c0483c140a556eaee51f3a1&units=metric&lang=ua"
         guard let url = URL(string: weatherURL) else {return}
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -30,12 +34,9 @@ class NetworkService: NetworkServiceProtocol {
             }
             
             do {
-                
                 let obj = try JSONDecoder().decode( OpenWeather.self, from: data!)
-                 var forecast = Forecasts(lists: obj.list)
-                 var city = obj.city
-//                sunTime = self.getSunsetAndSunrise(obj)
-//                getImage(forecastIndex: self.dayIndex, timeIndex: self.timeIndex)
+                let forecast = Forecasts(lists: obj.list, city: obj.city)
+                completion(.success(forecast))
                 
             } catch let error {
                 print(error)

@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 
 protocol LocationServiceProtocol {
-   func getLocation() -> (Double, Double)
+   func getLocation() -> (latitude: Double, longitude: Double)
     var locationManager : CLLocationManager { get}
     var location: (latitude: Double, longitude: Double) { get set }
 }
@@ -24,7 +24,7 @@ class LocationService: NSObject, LocationServiceProtocol,  CLLocationManagerDele
     }
    
 
-    func getLocation() -> (Double, Double) {
+    func getLocation() -> (latitude: Double, longitude: Double) {
             locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
@@ -37,7 +37,7 @@ class LocationService: NSObject, LocationServiceProtocol,  CLLocationManagerDele
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else {return}
-        location = (locValue.latitude, locValue.longitude)
+        location = (latitude: locValue.latitude, longitude: locValue.longitude)
         print("\(locValue.latitude) \(locValue.longitude)")
     }
     

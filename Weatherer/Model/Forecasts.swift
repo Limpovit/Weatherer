@@ -11,8 +11,9 @@ import Foundation
 //[Forecasts].5[DayForecasts].8[TimeForecast]
 struct Forecasts{
     var dayForecast: [DayForecast]
-//    var city: City
-    init(lists: [List]) {
+    var city: City
+    init(lists: [List], city: City) {
+        self.city = city
         dayForecast = [DayForecast]()
         var day =  DayForecast()
         let today = Date()
