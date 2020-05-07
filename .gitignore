@@ -88,3 +88,95 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+Pods/Pods.xcodeproj/project.pbxproj
+Pods/Swinject/LICENSE
+Pods/Swinject/README.md
+Pods/Swinject/Sources/_Resolver.swift
+Pods/Swinject/Sources/Assembler.swift
+Pods/Swinject/Sources/Assembly.swift
+Pods/Swinject/Sources/Behavior.swift
+Pods/Swinject/Sources/Container.Arguments.swift
+Pods/Swinject/Sources/Container.Logging.swift
+Pods/Swinject/Sources/Container.swift
+Pods/Swinject/Sources/Container.TypeForwarding.swift
+Pods/Swinject/Sources/DebugHelper.swift
+Pods/Swinject/Sources/FunctionType.swift
+Pods/Swinject/Sources/GraphIdentifier.swift
+Pods/Swinject/Sources/InstanceStorage.swift
+Pods/Swinject/Sources/InstanceWrapper.swift
+Pods/Swinject/Sources/ObjectScope.Standard.swift
+Pods/Swinject/Sources/ObjectScope.swift
+Pods/Swinject/Sources/Resolver.swift
+Pods/Swinject/Sources/ServiceEntry.swift
+Pods/Swinject/Sources/ServiceEntry.TypeForwarding.swift
+Pods/Swinject/Sources/ServiceKey.swift
+Pods/Swinject/Sources/SpinLock.swift
+Pods/Swinject/Sources/Swinject.h
+Pods/Swinject/Sources/SynchronizedResolver.Arguments.swift
+Pods/Swinject/Sources/SynchronizedResolver.swift
+Pods/Swinject/Sources/UnavailableItems.swift
+Pods/SwinjectAutoregistration/LICENSE
+Pods/SwinjectAutoregistration/README.md
+Pods/SwinjectAutoregistration/Sources/AutoRegistration.swift
+Pods/SwinjectAutoregistration/Sources/CheckResolved.swift
+Pods/SwinjectAutoregistration/Sources/Operators.swift
+Pods/SwinjectAutoregistration/Sources/ResolutionError.swift
+Pods/SwinjectAutoregistration/Sources/Resolver.swift
+Pods/SwinjectAutoregistration/Sources/SwinjectAutoregistration.h
+Pods/SwinjectAutoregistration/Sources/Type.swift
+Pods/SwinjectAutoregistration/Sources/TypeParser.swift
+Pods/SwinjectStoryboard/LICENSE.txt
+Pods/SwinjectStoryboard/README.md
+Pods/SwinjectStoryboard/Sources/Box.swift
+Pods/SwinjectStoryboard/Sources/Container+SwinjectStoryboard.swift
+Pods/SwinjectStoryboard/Sources/InjectionVerifiable.swift
+Pods/SwinjectStoryboard/Sources/RegistrationNameAssociatable.swift
+Pods/SwinjectStoryboard/Sources/SwinjectStoryboard+SetUp.m
+Pods/SwinjectStoryboard/Sources/SwinjectStoryboard+StoryboardReference.swift
+Pods/SwinjectStoryboard/Sources/SwinjectStoryboard.h
+Pods/SwinjectStoryboard/Sources/SwinjectStoryboard.swift
+Pods/SwinjectStoryboard/Sources/SwinjectStoryboardProtocol.h
+Pods/SwinjectStoryboard/Sources/UnavailableItems.swift
+Pods/SwinjectStoryboard/Sources/ViewController+Swinject.swift
+Pods/SwinjectStoryboard/Sources/iOS-tvOS/_SwinjectStoryboardBase.h
+Pods/SwinjectStoryboard/Sources/iOS-tvOS/_SwinjectStoryboardBase.m
+Pods/SwinjectStoryboard/Sources/iOS-tvOS/UIStoryboard+Swizzling.h
+Pods/SwinjectStoryboard/Sources/iOS-tvOS/UIStoryboard+Swizzling.m
+Pods/Target Support Files/Pods-Weatherer/Pods-Weatherer-acknowledgements.markdown
+Pods/Target Support Files/Pods-Weatherer/Pods-Weatherer-acknowledgements.plist
+Pods/Target Support Files/Pods-Weatherer/Pods-Weatherer-dummy.m
+Pods/Target Support Files/Pods-Weatherer/Pods-Weatherer-frameworks-Debug-input-files.xcfilelist
+Pods/Target Support Files/Pods-Weatherer/Pods-Weatherer-frameworks-Debug-output-files.xcfilelist
+Pods/Target Support Files/Pods-Weatherer/Pods-Weatherer-frameworks-Release-input-files.xcfilelist
+Pods/Target Support Files/Pods-Weatherer/Pods-Weatherer-frameworks-Release-output-files.xcfilelist
+Pods/Target Support Files/Pods-Weatherer/Pods-Weatherer-frameworks.sh
+Pods/Target Support Files/Pods-Weatherer/Pods-Weatherer-Info.plist
+Pods/Target Support Files/Pods-Weatherer/Pods-Weatherer-umbrella.h
+Pods/Target Support Files/Pods-Weatherer/Pods-Weatherer.debug.xcconfig
+Pods/Target Support Files/Pods-Weatherer/Pods-Weatherer.modulemap
+Pods/Target Support Files/Pods-Weatherer/Pods-Weatherer.release.xcconfig
+Pods/Target Support Files/Swinject/Swinject-dummy.m
+Pods/Target Support Files/Swinject/Swinject-Info.plist
+Pods/Target Support Files/Swinject/Swinject-prefix.pch
+Pods/Target Support Files/Swinject/Swinject-umbrella.h
+Pods/Target Support Files/Swinject/Swinject.debug.xcconfig
+Pods/Target Support Files/Swinject/Swinject.modulemap
+Pods/Target Support Files/Swinject/Swinject.release.xcconfig
+Pods/Target Support Files/SwinjectAutoregistration/SwinjectAutoregistration-dummy.m
+Pods/Target Support Files/SwinjectAutoregistration/SwinjectAutoregistration-Info.plist
+Pods/Target Support Files/SwinjectAutoregistration/SwinjectAutoregistration-prefix.pch
+Pods/Target Support Files/SwinjectAutoregistration/SwinjectAutoregistration-umbrella.h
+Pods/Target Support Files/SwinjectAutoregistration/SwinjectAutoregistration.debug.xcconfig
+Pods/Target Support Files/SwinjectAutoregistration/SwinjectAutoregistration.modulemap
+Pods/Target Support Files/SwinjectAutoregistration/SwinjectAutoregistration.release.xcconfig
+Pods/Target Support Files/SwinjectStoryboard/SwinjectStoryboard-dummy.m
+Pods/Target Support Files/SwinjectStoryboard/SwinjectStoryboard-Info.plist
+Pods/Target Support Files/SwinjectStoryboard/SwinjectStoryboard-prefix.pch
+Pods/Target Support Files/SwinjectStoryboard/SwinjectStoryboard-umbrella.h
+Pods/Target Support Files/SwinjectStoryboard/SwinjectStoryboard.debug.xcconfig
+Pods/Target Support Files/SwinjectStoryboard/SwinjectStoryboard.modulemap
+Pods/Target Support Files/SwinjectStoryboard/SwinjectStoryboard.release.xcconfig
+Podfile
+Podfile.lock
+Pods/Manifest.lock
+Pods/SwinjectStoryboard/Sources/SwinjectStoryboardOption.swift

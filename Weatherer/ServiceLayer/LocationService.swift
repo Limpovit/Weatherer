@@ -10,41 +10,38 @@ import Foundation
 import MapKit
 
 protocol LocationServiceProtocol {
-   func getLocation() -> (latitude: Double, longitude: Double)
-    var locationManager : CLLocationManager { get}
-    var location: (latitude: Double, longitude: Double) { get set }
+   func getLocation() -> (latitude: Double?, longitude: Double?)
+    
 }
 
 class LocationService: NSObject, LocationServiceProtocol,  CLLocationManagerDelegate{
     var locationManager = CLLocationManager()
-    var location: (latitude: Double, longitude: Double)
-    
+   
     override init() {
-        location = (0.0, 0.0)
     }
    
 
-    func getLocation() -> (latitude: Double, longitude: Double) {
+    func getLocation() -> (latitude: Double?, longitude: Double?) {
+        var location: (latitude: Double?, longitude: Double?)
             locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.requestLocation()
-        
+           location = (latitude: locationManager.location?.coordinate.latitude, longitude: locationManager.location?.coordinate.longitude)
     }
         return location
     }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else {return}
-        location = (latitude: locValue.latitude, longitude: locValue.longitude)
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else {return}        
         print("\(locValue.latitude) \(locValue.longitude)")
     }
     
     func  locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         
     }
-
     
 
     

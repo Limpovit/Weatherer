@@ -189,7 +189,7 @@ class ViewController: UIViewController {
             do {
                 
                 let weather = try JSONDecoder().decode( OpenWeather.self, from: data)
-                self.forecast = Forecasts(lists: weather.list)
+                self.forecast = Forecasts(lists: weather.list, city: weather.city)
                 self.city = weather.city
                 self.sunTime = self.getSunsetAndSunrise(weather)
                 self.getImage(forecastIndex: self.dayIndex, timeIndex: self.timeIndex)

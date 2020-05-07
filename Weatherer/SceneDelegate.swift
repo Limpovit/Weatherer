@@ -7,17 +7,41 @@
 //
 
 import UIKit
+import Swinject
+import SwinjectStoryboard
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    var container: Container = {
+        let builder = ModuleBuilder()
+        let container = Container()
+        container.storyboardInitCompleted(MainViewController.self) { r, c in
+            c.presenter = r.resolve(MainViewPresenterProtocol.self)
+        }
+        container.register(LocationServiceProtocol.self) { _ in LocationService() }
+        container.register(NetworkServiceProtocol.self) { r in
+            NetworkService(locationService: r.resolve(LocationServiceProtocol.self)!) }
+        container.register(MainViewController.self) { _ in  MainViewController() }
+        container.register(MainViewPresenterProtocol.self) { r in
+            MainPresenter(networkService: r.resolve(NetworkServiceProtocol.self)!) }
+    
+        return container
+    }()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        window?.windowScene = windowScene
+//        let mainVC = ModuleBuilder.createMainModule()
+//        window?.rootViewController = mainVC
+        window?.makeKeyAndVisible()
+        
+        let storyboard = SwinjectStoryboard.create(name: "Main", bundle: nil, container: container)
+        window?.rootViewController = storyboard.instantiateInitialViewController()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

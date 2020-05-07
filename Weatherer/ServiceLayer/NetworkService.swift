@@ -24,7 +24,7 @@ class NetworkService: NetworkServiceProtocol {
     func getForecast(completion: @escaping (Result<Forecasts?, Error>) -> Void) {
         
         let location = locationService.getLocation()
-        let weatherURL = "https://api.openweathermap.org/data/2.5/forecast?lat=\(location.latitude)&lon=\(location.longitude)&appid=97fe442c7c0483c140a556eaee51f3a1&units=metric&lang=ua"
+        let weatherURL = "https://api.openweathermap.org/data/2.5/forecast?lat=\(location.latitude!)&lon=\(location.longitude!)&appid=97fe442c7c0483c140a556eaee51f3a1&units=metric&lang=ua"
         guard let url = URL(string: weatherURL) else {return}
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in

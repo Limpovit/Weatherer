@@ -9,13 +9,14 @@
 import Foundation
 
 protocol MainViewProtocol: class {
+        
     func succes()
     func failure(error: Error)
 }
 protocol MainViewPresenterProtocol: class {
-    init(view: MainViewProtocol, networkService:  NetworkServiceProtocol )
+    init(networkService:  NetworkServiceProtocol )
     var forecasts: Forecasts? {get set}
-    func  getForecasts()
+    func  getForecasts(_ view: MainViewProtocol)
 }
 
 class MainPresenter: MainViewPresenterProtocol {
@@ -23,12 +24,12 @@ class MainPresenter: MainViewPresenterProtocol {
     weak var view: MainViewProtocol?
     let networkService: NetworkServiceProtocol
     
-    required init(view: MainViewProtocol, networkService: NetworkServiceProtocol) {
-        self.view = view
+    required init(networkService: NetworkServiceProtocol) {
         self.networkService = networkService
     }
     
-    func getForecasts() {
+    func getForecasts(_ view: MainViewProtocol) {
+        self.view = view
         networkService.getForecast { [weak self] result in
             guard let self = self else {return}
             DispatchQueue.main.async {
